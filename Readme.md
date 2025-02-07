@@ -48,3 +48,15 @@ $ npm install ts-node --save-dev
 ```
 $ npx nodemon src/index.ts 
 ```
+
+# Instalacion de cors
+
+Si al momento de ejecutar, les sale error en el fetch del frontend, debe ser porque falta instalar cors
+```
+npm install cors --save
+```
+
+Incluyendo sus tipos
+```
+npm install --save-dev @types/cors
+```
