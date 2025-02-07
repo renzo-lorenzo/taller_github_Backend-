@@ -6,8 +6,8 @@ import { emitWarning } from "process"
 dotenv.config()
 
 const app : Express = express()
-app.use(bodyParser.json())              //AQUI TENDREMOS NUESTRO BODY
-app.use(bodyParser.urlencoded({
+app.use(bodyParser.json())              //por json
+app.use(bodyParser.urlencoded({         //por formulario
     extended : true
 }))
 const port = process.env.PORT || 3000
@@ -52,13 +52,13 @@ app.get("/ep3", (req : Request, resp : Response) => {
 // {
 //      "msg" : "Error en login"
 // }
-app.get("/login", (req : Request, resp: Response) => {
-    const usuario = req.query.usuario
-    const password = req.query.password
+app.post("/login", (req : Request, resp: Response) => {
+    const usuario = req.body.usuario
+    const password = req.body.password
 
     if(usuario == "20211532@aloe.ulima.edu.pe" && password == "123"){
         // Login es correcto
-        resp.json({
+        resp.json({ // el json es lo usamos ahora para convertirlo a string
             msg : ""
         })
     }
