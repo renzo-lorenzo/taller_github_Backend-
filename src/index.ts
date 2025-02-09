@@ -1,7 +1,6 @@
 import express, {Express, Request, Response} from "express"
 import dotenv from "dotenv"
 import bodyParser from "body-parser"
-import { emitWarning } from "process"
 import cors from "cors"
 
 dotenv.config()
@@ -40,6 +39,49 @@ app.get("/ep2/:nombre", (req : Request, resp : Response) => {
 // Query params: nombre, apellido
 app.get("/ep3", (req : Request, resp : Response) => {
     resp.send(`Hola ${req.query.nombre} ${req.query.apellido}`)
+})
+
+// Endpoint Lista Gastos
+// Ruta : "/gastos"
+// Method: GET
+// Output:
+// En el caso que login sea correcto:
+// {
+//      "msg" : "",
+//      "gastos" : [
+//          {
+//          "id" : 1,
+//          "nombre" : "Proyecto 1",
+//          "nro_pom" : "5",
+//          "categoria" : "1",
+//          "status" : "1"
+//          },
+//          {
+//          "id" : 2,
+//          "nombre" : "Proyecto 2",
+//          "nro_pom" : "2",
+//          "categoria" : "2",
+//          "status" : "1"
+//          }
+//                  ]
+// }
+// En el caso de error sea login:
+// {
+//      "msg" : "Error: ..."
+// }
+app.get("/gastos", (req : Request, resp : Response) => {
+    resp.json({
+        msg : "",
+        gastos : [
+            {
+            fecha : "12/12/2024",
+            categoria : "Ocio",
+            descripcion : "La Niebla, libro de Steven King",
+            recurrente : "No",
+            monto : 29.99
+            }
+        ]
+   })
 })
 
 // Endpoint Login
