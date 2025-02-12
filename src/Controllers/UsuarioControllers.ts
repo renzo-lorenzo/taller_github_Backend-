@@ -1,4 +1,6 @@
 import express, {Request, Response} from "express"
+import { where } from "sequelize"
+const db = require("../DAO/models")
 
 const UsuarioController = () => {
     const path  = "/usuarios" // AHORA LA RUTA ES "/usuarios"
@@ -18,12 +20,20 @@ const UsuarioController = () => {
     // {
     //      "msg" : "Error en login"
     // }
-    router.post("/login", (req : Request, resp: Response) => {
+    router.post("/login", async (req : Request, resp: Response) => {
         console.log(req.body)
         const usuario = req.body.usuario
         const password = req.body.password
+
+        const usuarios = await db.Usuario.findAll({
+            where : {
+                username : usuario,
+                password : password
+            }
+        })
+        //console.log(usuarios)
     
-        if(usuario == "20211532@aloe.ulima.edu.pe" && password == "123"){
+        if(usuarios.length > 0){
             // Login es correcto
             resp.json({ // el json es lo usamos ahora para convertirlo a string
                 msg : ""
