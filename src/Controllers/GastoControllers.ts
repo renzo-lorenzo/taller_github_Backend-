@@ -1,4 +1,5 @@
 import express, {Request, Response} from "express"
+const db = require("../DAO/models")
 
 const GastoController = () => {
     const path  = "/gastos"
@@ -6,8 +7,14 @@ const GastoController = () => {
     const router = express.Router()
 
     // Operacion para listar gastos
-    router.get("/", (req : Request, resp : Response) => {
+    router.get("/", async (req : Request, resp : Response) => {
+        const gastos = await db.Gasto.findAll() // Conectamos con la base de datos
         resp.json({
+            msg : "",
+            gastos : gastos
+        })
+
+        /*resp.json({
             msg: "",
             gastos : [
                 {
@@ -18,7 +25,7 @@ const GastoController = () => {
                     monto : 29.99
                 }
             ]
-        })
+        })*/
     })
     return [path, router]
 
