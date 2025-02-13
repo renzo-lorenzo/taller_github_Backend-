@@ -28,7 +28,8 @@ const UsuarioController = () => {
         const usuarios = await db.Usuario.findAll({
             where : {
                 username : usuario,
-                password : password
+                password : password,
+                estado : true
             }
         })
         //console.log(usuarios)

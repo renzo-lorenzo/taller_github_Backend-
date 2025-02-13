@@ -106,3 +106,30 @@ Ejecutaremos la migracion y se actualizara y agregara en el pgAdmin 4
 ```
 npx sequelize db:migrate
 ```
+
+# Creacion de seeders
+Iniciamos con el siguiente codigo (en este caso, para gastos será y no olvidar estar ubicado en la carpeta DAO)
+```
+npx sequelize seed:generate --name data_gastos
+```
+
+Agregamos el seeder una vez lo hallamos configurado
+```
+npx sequelize db:seed:all 
+```
+Listo, eso es todo para tener un seeder
+
+# Quieres rehacer una base de datos?
+Pues borra la que tienes, y ahora que tienes seeders, controladores y migraciones sera facil reconstruirla
+Empezando por poner para crear la base de datos (Aun estamos en DAO por si te lo preguntas)
+```
+npx sequelize db:create 
+```
+Aplicamos ahora las migraciones para crear las tablas
+```
+npx sequelize db:migrate 
+```
+y ahora aplicamos los seeders para rellenarlas
+```
+npx sequelize db:seed:all 
+```
