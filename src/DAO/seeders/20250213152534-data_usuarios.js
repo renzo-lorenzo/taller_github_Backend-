@@ -6,7 +6,7 @@ module.exports = {
     return queryInterface.bulkInsert('Usuario', [ // No olvidar quitar Projects y poner el nombre de la tabla "Usuario"
       {
        nombre: "Renzo Henry",
-       username: "Renzo",
+       username: "20211532@aloe.ulima.edu.pe",
        password: "123",
        estado: true
       }
