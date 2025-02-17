@@ -47,6 +47,20 @@ const UsuarioController = () => {
             })
         }
     })
+    router.get("/:id", async (req: Request, resp: Response) => {
+        const userId = req.params.id;
+    
+        const usuario = await db.Usuario.findByPk(userId, {
+            attributes: ["id", "nombre", "username", "password"]
+        });
+    
+        if (usuario) {
+            resp.json(usuario);
+        } else {
+            resp.status(404).json({ msg: "Usuario no encontrado" });
+        }
+    });
+
     return [path, router]
 }
 
