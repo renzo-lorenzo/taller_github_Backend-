@@ -15,7 +15,7 @@ module.exports = {
     });
     await queryInterface.addConstraint("Gasto", {
       name : "FK_GASTO_CATEGORIA",
-      type : "FOREING KEY",
+      type : "FOREIGN KEY",
       fields : ["categoriaId"],
       references : {
         table : "Categoria",
