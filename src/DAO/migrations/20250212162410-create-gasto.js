@@ -13,8 +13,8 @@ module.exports = {
       fecha: {
         type: Sequelize.DATE
       },
-      categoria: {
-        type: Sequelize.STRING
+      categoriaId: {
+        type: Sequelize.INTEGER
       },
       descripcion: {
         type: Sequelize.STRING

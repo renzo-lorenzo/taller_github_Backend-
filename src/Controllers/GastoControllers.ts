@@ -33,7 +33,7 @@ const GastoController = () => {
 
             const gastoCreado = await db.Gasto.create({
                 fecha : nuevoGasto.fecha,
-                categoria : nuevoGasto.categoria,
+                categoriaId : nuevoGasto.categoriaId,
                 descripcion : nuevoGasto.descripcion,
                 recurrente : nuevoGasto.recurrente,
                 monto : 0
