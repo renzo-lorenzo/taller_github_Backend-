@@ -25,20 +25,23 @@ const UsuarioController = () => {
         const usuario = req.body.usuario
         const password = req.body.password
 
-        const usuarios = await db.Usuario.findAll({
-            where : {
-                username : usuario,
-                password : password,
-                estado : true
+        const usuarioEncontrado = await db.Usuario.findOne({
+            where: {
+                username: usuario, 
+                password: password,
+                estado: true
             }
-        })
-        //console.log(usuarios)
+        });
+        console.log(" Usuario encontrado:", usuarioEncontrado); //verificamos qué devuelve
     
-        if(usuarios.length > 0){
+        if(usuarioEncontrado){
             // Login es correcto
-            resp.json({ // el json es lo usamos ahora para convertirlo a string
-                msg : ""
-            })
+            resp.json({
+                id: usuarioEncontrado.id, 
+                nombre: usuarioEncontrado.nombre, 
+                usuario: usuarioEncontrado.username,  
+                msg: ""
+            });
         }
         else{
             // Login es incorrecto
@@ -47,6 +50,7 @@ const UsuarioController = () => {
             })
         }
     })
+
     router.get("/:id", async (req: Request, resp: Response) => {
         const userId = req.params.id;
     
@@ -59,6 +63,41 @@ const UsuarioController = () => {
         } else {
             resp.status(404).json({ msg: "Usuario no encontrado" });
         }
+    });
+
+    // Endpoint de registro de usuarios
+    // Path : "/"
+    // Method: POST
+    // Form: nombre, usuario, password
+    // Output:
+    // En el caso que login sea correcto:
+    // {
+    //      "msg" : ""
+    // }
+    // En el caso de error (osea vacio):
+    // {
+    //      "msg" : "Todos los campos son obligatorios"
+    // }
+    router.post("/", async (req: Request, resp: Response) => {
+        console.log(req.body); //verificamos los datos recibidos
+    
+        const usuario = req.body.usuario;
+        const nombre = req.body.nombre;
+        const password = req.body.password;
+    
+        if (!usuario || !nombre || !password) {         // esto es para evitar campos vacíos
+            resp.json({ msg: "Todos los campos son obligatorios" });
+            return;
+        }
+    
+        const usuarioCreado = await db.Usuario.create({ //creamos el usuario en la base de datos
+            nombre: nombre,
+            username: usuario, // Asegúrate de que la DB usa "username" y no "correo"
+            password: password,
+            estado: true, // Estado por defecto
+        });
+    
+        resp.json({ msg: "" }); // Igual que en login
     });
 
     return [path, router]
