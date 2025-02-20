@@ -35,14 +35,16 @@ const GastoController = () => {
                 fecha : nuevoGasto.fecha,
                 categoriaId : nuevoGasto.categoriaId,
                 descripcion : nuevoGasto.descripcion,
-                recurrente : nuevoGasto.recurrente,
-                monto : 0
+                recurrente: nuevoGasto.recurrente ? "Sí" : "No",
+                monto: nuevoGasto.monto,
             })
             resp.json({
                 msg : "",
                 gasto : gastoCreado
             })
        })
+
+       
     })
     return [path, router]
 
