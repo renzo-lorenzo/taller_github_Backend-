@@ -2,23 +2,42 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Usuario', [ // No olvidar quitar Projects y poner el nombre de la tabla "Usuario"
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('Usuario', [
       {
-       nombre: "Renzo Henry",
-       username: "20211532@aloe.ulima.edu.pe",
-       password: "123",
-       estado: true
+        nombre: "Renzo Henry",
+        username: "20211532@aloe.ulima.edu.pe",
+        password: "1532",
+        estado: true
+      },
+      {
+        nombre: "Piero Silva",
+        username: "20194613@aloe.ulima.edu.pe",
+        password: "4613",
+        estado: true
+      },
+      {
+        nombre: "Isaac Sisniegas",
+        username: "20191931@aloe.ulima.edu.pe",
+        password: "1931",
+        estado: true
+      },
+      {
+        nombre: "Diego Morales",
+        username: "20211769@aloe.ulima.edu.pe",
+        password: "1769",
+        estado: true
+      },
+      {
+        nombre: "Rodrigo Figueroa",
+        username: "20202926@aloe.ulima.edu.pe",
+        password: "2926",
+        estado: true
       }
-     ], {});
+    ], {});
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Usuario', null, {});
   }
 };

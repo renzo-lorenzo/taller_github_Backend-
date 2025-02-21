@@ -1,30 +1,33 @@
-import express, {Express, Request, Response, Router} from "express"
-import dotenv from "dotenv"
-import bodyParser from "body-parser"
-import cors from "cors"
-import GastoController from "./Controllers/GastoControllers"
-import UsuarioController from "./Controllers/UsuarioControllers"
+import express, { Express, Router } from "express";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import cors from "cors";
+
+import GastoController from "./Controllers/GastoControllers";
+import UsuarioController from "./Controllers/UsuarioControllers";
 import CategoriaController from "./Controllers/CategoriaControllers";
+import PasswordController from "./Controllers/PasswordController"; // 🔹 Agregamos el nuevo controlador
 
-dotenv.config()
+dotenv.config();
 
-const app : Express = express()
-app.use(bodyParser.json())              //por json
-app.use(bodyParser.urlencoded({         //por formulario
-    extended : true
-}))
-app.use(cors()) // APLICACION DE CORS
+const app: Express = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 
-const [gastoPath, gastoRouter] = GastoController()
-const [usuarioPath, usuarioRouter] = UsuarioController()
+// Agregar controladores
+const [gastoPath, gastoRouter] = GastoController();
+const [usuarioPath, usuarioRouter] = UsuarioController();
 const [categoriaPath, categoriaRouter] = CategoriaController();
+const passwordRouter = PasswordController(); // 🔹 Nuevo controlador
 
-app.use(gastoPath as string, gastoRouter as Router)
-app.use(usuarioPath as string, usuarioRouter as Router)
+app.use(gastoPath as string, gastoRouter as Router);
+app.use(usuarioPath as string, usuarioRouter as Router);
 app.use(categoriaPath as string, categoriaRouter as Router);
+app.use("/password", passwordRouter);  // 🔹 Ahora la ruta de cambio de contraseña está activa
 
 app.listen(port, () => {
-    console.log(`[Server]: Servidor ejecutandose en puerto ${port}`)
-})
+    console.log(`[Server]: Servidor ejecutándose en puerto ${port}`);
+});

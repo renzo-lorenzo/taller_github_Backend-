@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "Renzo",
-    "password": "123",
-    "database": "trabajogrupal_db",
+    "username": "pomodoro",
+    "password": "pomodoro",
+    "database": "pomodoro_db",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
