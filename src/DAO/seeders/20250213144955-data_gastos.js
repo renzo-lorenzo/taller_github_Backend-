@@ -12,7 +12,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('Gasto', [ // No olvidar quitar Projects y poner el nombre de la tabla "Gasto"
      {
-      id: 1,
       fecha: new Date("2024-12-12"),
       categoriaId: 1,
       descripcion: "La Niebla, libro de Steven King",
@@ -20,7 +19,6 @@ module.exports = {
       monto: 29.99
      },
      {
-      id: 2,
       fecha: new Date("2/12/2024"),
       categoriaId: 2,
       descripcion: "Servicio de Luz",
@@ -28,7 +26,6 @@ module.exports = {
       monto: 229.99
      },
      {
-      id: 3,
       fecha: new Date("2/12/2024"),
       categoriaId: 2,
       descripcion: "Servicio de agua",
@@ -36,7 +33,6 @@ module.exports = {
       monto: 129.99
      },
      {
-      id: 4,
       fecha: new Date("5/12/2024"),
       categoriaId: 2,
       descripcion: "Movistar",
@@ -44,7 +40,6 @@ module.exports = {
       monto: 169.99
      },
      {
-      id: 5,
       fecha: new Date("5/12/2024"),
       categoriaId: 3,
       descripcion: "Compras del mes",

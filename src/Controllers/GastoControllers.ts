@@ -31,12 +31,12 @@ const GastoController = () => {
     */
     router.post("/", async (req: Request, resp: Response) => {
         const nuevoGasto = req.body;
-    
+        console.log(nuevoGasto);
         const gastoCreado = await db.Gasto.create({
             fecha: nuevoGasto.fecha,
             categoriaId: nuevoGasto.categoriaId,
             descripcion: nuevoGasto.descripcion,
-            recurrente: nuevoGasto.recurrente,
+            recurrente: nuevoGasto.recurrente === "Sí" ? "Sí" : "No",
             monto: nuevoGasto.monto,
         });
     
