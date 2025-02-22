@@ -1,22 +1,25 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+'use strict';
+const { Model } = require('sequelize');
 
-const DashboardAdministrador = sequelize.define('DashboardAdministrador', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    metricName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    metricValue: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-}, {
-    tableName: 'dashboard_administradores',
-});
+module.exports = (sequelize, DataTypes) => {
+  class DashboardAdministrador extends Model {
+    static associate(models) {
+      // Relaciones si es necesario
+    }
+  }
 
-module.exports = DashboardAdministrador;
+  DashboardAdministrador.init(
+    {
+      metricName: DataTypes.STRING,
+      metricValue: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'DashboardAdministrador',
+      freezeTableName: true,
+      timestamps: false,
+    }
+  );
+
+  return DashboardAdministrador;
+};
