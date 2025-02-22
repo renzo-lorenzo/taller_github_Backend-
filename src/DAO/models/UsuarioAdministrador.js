@@ -1,31 +1,33 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+'use strict';
+const { Model } = require('sequelize');
 
-const UsuarioAdministrador = sequelize.define('UsuarioAdministrador', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    nombre: {
+module.exports = (sequelize, DataTypes) => {
+  class UsuarioAdministrador extends Model {
+    static associate(models) {
+      UsuarioAdministrador.hasMany(models.HistorialAdministrador, { foreignKey: 'usuarioId' });
+    }
+  }
+
+  UsuarioAdministrador.init(
+    {
+      nombre: DataTypes.STRING,
+      email: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
         unique: true,
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    rol: {
+      },
+      password: DataTypes.STRING,
+      rol: {
         type: DataTypes.STRING,
         defaultValue: 'admin',
+      },
     },
-}, {
-    tableName: 'usuarios_administradores',
-});
+    {
+      sequelize,
+      modelName: 'UsuarioAdministrador',
+      freezeTableName: true,
+      timestamps: false,
+    }
+  );
 
-module.exports = UsuarioAdministrador;
+  return UsuarioAdministrador;
+};
