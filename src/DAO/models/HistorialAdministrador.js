@@ -1,26 +1,29 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+'use strict';
+const { Model } = require('sequelize');
 
-const HistorialAdministrador = sequelize.define('HistorialAdministrador', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    accion: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    fecha: {
+module.exports = (sequelize, DataTypes) => {
+  class HistorialAdministrador extends Model {
+    static associate(models) {
+      HistorialAdministrador.belongsTo(models.UsuarioAdministrador, { foreignKey: 'usuarioId' });
+    }
+  }
+
+  HistorialAdministrador.init(
+    {
+      accion: DataTypes.STRING,
+      fecha: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+      },
+      usuarioId: DataTypes.INTEGER,
     },
-    usuarioId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-}, {
-    tableName: 'historial_administradores',
-});
+    {
+      sequelize,
+      modelName: 'HistorialAdministrador',
+      freezeTableName: true,
+      timestamps: false,
+    }
+  );
 
-module.exports = HistorialAdministrador;
+  return HistorialAdministrador;
+};
