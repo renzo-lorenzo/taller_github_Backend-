@@ -1,13 +1,22 @@
 import { Request, Response } from 'express';
-import DashboardService from '../Services/DashboardService';
+const db = require('../DAO/models');
 
 export default class DashboardController {
-    static async getDashboardData(req: Request, res: Response) {
-        try {
-            const dashboardData = await DashboardService.getDashboardData();
-            res.json(dashboardData);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
+  static async getDashboardData(req: Request, res: Response) {
+    try {
+      const totalUsers = await db.UsuarioAdministrador.count();
+      const totalActions = await db.HistorialAdministrador.count();
+      const lastAction = await db.HistorialAdministrador.findOne({
+        order: [['fecha', 'DESC']],
+      });
+
+      res.json({
+        totalUsers,
+        totalActions,
+        lastAction: lastAction ? lastAction.accion : 'No hay acciones registradas',
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Error al obtener los datos del dashboard' });
     }
+  }
 }
