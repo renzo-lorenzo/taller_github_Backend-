@@ -1,8 +1,12 @@
-import { Request, Response } from 'express';
-const db = require('../DAO/models');
+import { Router } from "express";
+const db = require("../DAO/models");
 
-export default class DashboardController {
-  static async getDashboardData(req: Request, res: Response) {
+const DashboardController = () => {
+  const router = Router();
+  const path = "/dashboard";
+
+  // Obtener métricas del dashboard
+  router.get("/", async (req, res) => {
     try {
       const totalUsers = await db.UsuarioAdministrador.count();
       const totalActions = await db.HistorialAdministrador.count();
@@ -16,7 +20,11 @@ export default class DashboardController {
         lastAction: lastAction ? lastAction.accion : 'No hay acciones registradas',
       });
     } catch (error) {
-      res.status(500).json({ message: 'Error al obtener los datos del dashboard' });
+      res.status(500).json({ message: "Error al obtener los datos del dashboard" });
     }
-  }
-}
+  });
+
+  return [path, router];
+};
+
+export default DashboardController;
