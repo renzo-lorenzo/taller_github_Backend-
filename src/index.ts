@@ -5,6 +5,7 @@ import cors from "cors";
 
 import GastoController from "./Controllers/GastoControllers";
 import UsuarioController from "./Controllers/UsuarioControllers";
+import HistorialController from "./Controllers/HistorialControllers";
 import CategoriaController from "./Controllers/CategoriaControllers";
 import PasswordController from "./Controllers/PasswordController";
 import AdminController from "./Controllers/AdminController";
@@ -25,10 +26,12 @@ const [usuarioPath, usuarioRouter] = UsuarioController();
 const [categoriaPath, categoriaRouter] = CategoriaController();
 const passwordRouter = PasswordController();
 
-// Agregar nuevos controladores
+const [historialPath, historialRouter] = HistorialController();
+app.use(historialPath as string, historialRouter as Router);
+
 const [adminPath, adminRouter] = AdminController();
 const [dashboardPath, dashboardRouter] = DashboardController();
-// Montar rutas
+
 app.use(gastoPath as string, gastoRouter as Router);
 app.use(usuarioPath as string, usuarioRouter as Router);
 app.use(categoriaPath as string, categoriaRouter as Router);
