@@ -7,7 +7,9 @@ import GastoController from "./Controllers/GastoControllers";
 import UsuarioController from "./Controllers/UsuarioControllers";
 import HistorialController from "./Controllers/HistorialControllers";
 import CategoriaController from "./Controllers/CategoriaControllers";
-import PasswordController from "./Controllers/PasswordController"; // 🔹 Agregamos el nuevo controlador
+import PasswordController from "./Controllers/PasswordController";
+import AdminController from "./Controllers/AdminController";
+import DashboardController from "./Controllers/DashboardController";
 
 dotenv.config();
 
@@ -18,21 +20,25 @@ app.use(cors());
 
 const port = process.env.PORT || 3000;
 
-// Agregar controladores
+// Agregar controladores existentes
 const [gastoPath, gastoRouter] = GastoController();
 const [usuarioPath, usuarioRouter] = UsuarioController();
 const [categoriaPath, categoriaRouter] = CategoriaController();
-const passwordRouter = PasswordController(); // 🔹 Nuevo controlador
+const passwordRouter = PasswordController();
 
 const [historialPath, historialRouter] = HistorialController();
-
 app.use(historialPath as string, historialRouter as Router);
+
+const [adminPath, adminRouter] = AdminController();
+const [dashboardPath, dashboardRouter] = DashboardController();
 
 app.use(gastoPath as string, gastoRouter as Router);
 app.use(usuarioPath as string, usuarioRouter as Router);
 app.use(categoriaPath as string, categoriaRouter as Router);
-app.use("/password", passwordRouter);  // 🔹 Ahora la ruta de cambio de contraseña está activa
+app.use("/password", passwordRouter);
+app.use(adminPath as string, adminRouter as Router);
+app.use(dashboardPath as string, dashboardRouter as Router);
 
 app.listen(port, () => {
-    console.log(`[Server]: Servidor ejecutándose en puerto ${port}`);
+  console.log(`[Server]: Servidor ejecutándose en puerto ${port}`);
 });
