@@ -28,14 +28,14 @@ module.exports = {
         username: "20191931@aloe.ulima.edu.pe",
         password: await bcrypt.hash("1931", saltRounds),
         estado: true,
-        rol: "Admin"
+        rol: "User"
       },
       {
         nombre: "Diego Morales",
         username: "20211769@aloe.ulima.edu.pe",
         password: await bcrypt.hash("1769", saltRounds),
         estado: true,
-        rol: "Admin"
+        rol: "User"
       },
       {
         nombre: "Rodrigo Figueroa",
@@ -43,6 +43,20 @@ module.exports = {
         password: await bcrypt.hash("2926", saltRounds),
         estado: true,
         rol: "User"
+      },
+      {
+        nombre: "Edgard Vargas",
+        username: "ejvargas@ulima.edu.pe",
+        password: await bcrypt.hash("1234", saltRounds),
+        estado: true,
+        rol: "Admin"
+      },
+      {
+        nombre: "Hernan Quintana",
+        username: "hquintan@ulima.edu.pe",
+        password: await bcrypt.hash("1234", saltRounds),
+        estado: true,
+        rol: "Admin"
       }
     ], {});
   },
