@@ -22,13 +22,15 @@ const port = process.env.PORT || 3000;
 const [gastoPath, gastoRouter] = GastoController();
 const [usuarioPath, usuarioRouter] = UsuarioController();
 const [categoriaPath, categoriaRouter] = CategoriaController();
-const [historialPath, historialRouter] = HistorialController();
 const passwordRouter = PasswordController(); // 🔹 Nuevo controlador
+
+const [historialPath, historialRouter] = HistorialController();
+
+app.use(historialPath as string, historialRouter as Router);
 
 app.use(gastoPath as string, gastoRouter as Router);
 app.use(usuarioPath as string, usuarioRouter as Router);
 app.use(categoriaPath as string, categoriaRouter as Router);
-app.use(historialPath as string, historialRouter as Router);
 app.use("/password", passwordRouter);  // 🔹 Ahora la ruta de cambio de contraseña está activa
 
 app.listen(port, () => {
