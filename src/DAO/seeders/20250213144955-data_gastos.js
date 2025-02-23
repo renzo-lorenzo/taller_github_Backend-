@@ -11,41 +11,48 @@ module.exports = {
     ])
 
     return queryInterface.bulkInsert('Gasto', [ // No olvidar quitar Projects y poner el nombre de la tabla "Gasto"
-     {
-      fecha: new Date("2024-12-12"),
-      categoriaId: 1,
-      descripcion: "La Niebla, libro de Steven King",
-      recurrente: "No", 
-      monto: 29.99
-     },
-     {
-      fecha: new Date("2/12/2024"),
-      categoriaId: 2,
-      descripcion: "Servicio de Luz",
-      recurrente: "Si", 
-      monto: 229.99
-     },
-     {
-      fecha: new Date("2/12/2024"),
-      categoriaId: 2,
-      descripcion: "Servicio de agua",
-      recurrente: "Si", 
-      monto: 129.99
-     },
-     {
-      fecha: new Date("5/12/2024"),
-      categoriaId: 2,
-      descripcion: "Movistar",
-      recurrente: "Si", 
-      monto: 169.99
-     },
-     {
-      fecha: new Date("5/12/2024"),
-      categoriaId: 3,
-      descripcion: "Compras del mes",
-      recurrente: "Si", 
-      monto: 369.99
-     }
+      {
+        fecha: new Date("2024-03-15"),
+        categoriaId: 1,
+        descripcion: "Cena en restaurante italiano",
+        recurrente: "No", 
+        monto: 85.50
+       },
+       {
+        fecha: new Date("2024-04-01"),
+        categoriaId: 2,
+        descripcion: "Membresía del gimnasio",
+        recurrente: "Sí", 
+        monto: 150.00
+       },
+       {
+        fecha: new Date("2024-05-20"),
+        categoriaId: 3,
+        descripcion: "Compra de gasolina",
+        recurrente: "Sí", 
+        monto: 300.75
+       },
+       {
+        fecha: new Date("2024-06-10"),
+        categoriaId: 1,
+        descripcion: "Suscripción a Netflix",
+        recurrente: "Sí", 
+        monto: 55.99
+       },
+       {
+        fecha: new Date("2024-07-05"),
+        categoriaId: 2,
+        descripcion: "Compra de ropa en rebajas",
+        recurrente: "No", 
+        monto: 420.30
+       },
+       {
+        fecha: new Date("2024-08-22"),
+        categoriaId: 3,
+        descripcion: "Pago de internet",
+        recurrente: "Sí", 
+        monto: 120.00
+       }
     ], {});
    },
 
