@@ -10,6 +10,7 @@ import CategoriaController from "./Controllers/CategoriaControllers";
 import PasswordController from "./Controllers/PasswordController";
 import AdminController from "./Controllers/AdminController";
 import DashboardController from "./Controllers/DashboardController";
+import PresupuestoController from "./Controllers/PresupuestoControllers";
 
 dotenv.config();
 
@@ -28,6 +29,9 @@ const passwordRouter = PasswordController();
 
 const [historialPath, historialRouter] = HistorialController();
 app.use(historialPath as string, historialRouter as Router);
+
+const [presupuestoPath, presupuestoRouter] = PresupuestoController();
+app.use(presupuestoPath as string, presupuestoRouter as Router);
 
 const [adminPath, adminRouter] = AdminController();
 const [dashboardPath, dashboardRouter] = DashboardController();
