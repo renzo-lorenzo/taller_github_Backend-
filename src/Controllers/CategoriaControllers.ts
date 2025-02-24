@@ -39,6 +39,12 @@ const CategoriaController = () => {
                             "(SELECT COALESCE(SUM(monto), 0) FROM \"Presupuesto\" WHERE \"Presupuesto\".\"categoriaId\" = \"Categoria\".\"id\")"
                         ),
                         "presupuestoTotal"
+                    ],
+                    [
+                        db.sequelize.literal(
+                            "(SELECT COALESCE(SUM(monto), 0) FROM \"Gasto\" WHERE \"Gasto\".\"categoriaId\" = \"Categoria\".\"id\")"
+                        ),
+                        "gastoTotal"
                     ]
                 ]
             });

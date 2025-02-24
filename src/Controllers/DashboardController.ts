@@ -6,7 +6,7 @@ const DashboardController = () => {
   const path = "/dashboard";
 
   // Endpoint para estadísticas de usuarios
-  router.get("/users-stats", async (req: Request, res: Response) => {
+  router.get("/users-stats", async (req: Request, res: Response): Promise<void> => {
     try {
       // Contar usuarios con rol 'User'
       const totalUsers = await db.Usuario.count({
@@ -28,18 +28,24 @@ const DashboardController = () => {
       // Formatear respuesta
       res.json({
         totalUsers,
-        monthlySignups: monthlySignups.map(item => ({
-          month: item.month.toISOString().split('T')[0], // Formato YYYY-MM-DD
+        monthlySignups: monthlySignups.map((item: { month: string, count: number }) => ({
+          month: item.month,
           count: item.count
-        }))
+      }))
+      
       });
 
     } catch (error) {
-      res.status(500).json({
-        message: "Error al obtener estadísticas",
-        error: error.message
-      });
-    }
+          if (error instanceof Error) {
+              console.error("Error:", error.message);
+              res.status(500).json({ error: error.message });
+              return
+          } else {
+              console.error("Error desconocido:", error);
+              res.status(500).json({ error: "Ocurrió un error inesperado" });
+              return
+          }
+      }
   });
 
   return [path, router];
