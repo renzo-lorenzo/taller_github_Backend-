@@ -28,11 +28,6 @@ module.exports = {
         allowNull: false,
         defaultValue: 'User'
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
     });
   },
 
