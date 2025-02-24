@@ -179,10 +179,12 @@ const UsuarioController = () => {
             return;
         }
 
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const usuarioCreado = await db.Usuario.create({
             nombre: nombre,
             username: username,
-            password: password,
+            password: hashedPassword,
             estado: true,
             rol: rol
         });
@@ -224,11 +226,14 @@ const UsuarioController = () => {
             if (!usuario) {
                 resp.json({ msg: "Usuario no encontrado" });
                 return;
-            }       
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+
             await usuario.update({
                 nombre : nombre,
                 username : username,
-                password : password,
+                password : hashedPassword,
                 estado : estado,
                 rol : rol
             })     

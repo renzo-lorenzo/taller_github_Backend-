@@ -8,7 +8,7 @@ const AdminController = () => {
   // Obtener todos los usuarios administradores
   router.get("/users", async (req, res) => {
     try {
-      const users = await db.UsuarioAdministrador.findAll();
+      const users = await db.Usuario.findAll();
       res.json(users);
     } catch (error) {
       res.status(500).json({ message: "Error al obtener los usuarios" });
@@ -19,7 +19,7 @@ const AdminController = () => {
   router.post("/users", async (req, res) => {
     try {
       const { nombre, email, password } = req.body;
-      const adminUser = await db.UsuarioAdministrador.create({ nombre, email, password });
+      const adminUser = await db.Usuario.create({ nombre, email, password });
       res.status(201).json(adminUser);
     } catch (error) {
       res.status(500).json({ message: "Error al crear el usuario administrador" });
@@ -30,7 +30,7 @@ const AdminController = () => {
   router.get("/users/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await db.UsuarioAdministrador.findByPk(id);
+      const user = await db.Usuario.findByPk(id);
       if (user) {
         res.json(user);
       } else {
@@ -46,7 +46,7 @@ const AdminController = () => {
     try {
       const { id } = req.params;
       const { nombre, email, password } = req.body;
-      const user = await db.UsuarioAdministrador.findByPk(id);
+      const user = await db.Usuario.findByPk(id);
       if (user) {
         user.nombre = nombre;
         user.email = email;
@@ -65,7 +65,7 @@ const AdminController = () => {
   router.delete("/users/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const user = await db.UsuarioAdministrador.findByPk(id);
+      const user = await db.Usuario.findByPk(id);
       if (user) {
         await user.destroy();
         res.json({ message: "Usuario eliminado correctamente" });
@@ -80,7 +80,7 @@ const AdminController = () => {
   // Obtener el historial de acciones
   router.get("/history", async (req, res) => {
     try {
-      const history = await db.HistorialAdministrador.findAll();
+      const history = await db.Historial.findAll();
       res.json(history);
     } catch (error) {
       res.status(500).json({ message: "Error al obtener el historial" });
@@ -91,7 +91,7 @@ const AdminController = () => {
   router.post("/history", async (req, res) => {
     try {
       const { usuarioId, accion } = req.body;
-      const log = await db.HistorialAdministrador.create({ usuarioId, accion });
+      const log = await db.Historial.create({ usuarioId, accion });
       res.status(201).json(log);
     } catch (error) {
       res.status(500).json({ message: "Error al registrar la acción" });
