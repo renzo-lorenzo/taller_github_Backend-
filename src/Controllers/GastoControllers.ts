@@ -48,7 +48,7 @@ const GastoController = () => {
     Endpoint: GET /gastos/alertas/:usuarioId
     Este endpoint verifica si los egresos del usuario han superado un umbral.
     */
-    router.get("/alertas/:usuarioId", async (req: Request, resp: Response) => {
+    router.get("/alertas/:usuarioId", async (req: Request, resp: Response): Promise<void> => {
         try {
             const { usuarioId } = req.params;
             const limiteGastos = 1000; // Umbral de alerta
@@ -57,10 +57,11 @@ const GastoController = () => {
             const totalGastos = await db.Gasto.sum("monto", { where: { usuarioId } });
 
             if (totalGastos > limiteGastos) {
-                return resp.json({
+                resp.json({
                     alerta: true,
                     mensaje: "Has superado tu límite de gastos"
                 });
+                return
             }
 
             resp.json({
