@@ -89,6 +89,30 @@ const GastoController = () => {
         }
     });
 
+    router.post("/eliminar", async (req: Request, resp: Response): Promise<void> => {
+        try {
+            const { id } = req.body;
+
+            if (!id || isNaN(id)) {
+                resp.status(400).json({ msg: "ID inválido o no proporcionado" });
+                return;
+            }
+
+            const gasto = await db.Gasto.findOne({ where: { id } });
+
+            if (!gasto) {
+                resp.status(404).json({ msg: "Gasto no encontrado" });
+                return;
+            }
+
+            await gasto.destroy();
+            resp.json({ msg: "Gasto eliminado correctamente" });
+        } catch (error: any) {
+            console.error("Error al eliminar gasto:", error);
+            resp.status(500).json({ msg: "Error del servidor" });
+        }
+    });
+
     return [path, router]
 }
 
