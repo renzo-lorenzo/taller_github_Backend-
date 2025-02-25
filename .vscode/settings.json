@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a705a315-1877-424b-be77-07776bd9d87f/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/tallergithubbackend",
+    "appService.deploySubpath": "."
+}

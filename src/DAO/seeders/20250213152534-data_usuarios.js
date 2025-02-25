@@ -13,7 +13,7 @@ module.exports = {
         nombre: "Renzo Henry",
         username: "20211532@aloe.ulima.edu.pe",
         password: await bcrypt.hash("1532", saltRounds),
-        estado: true,
+        estado: false,
         rol: "User"
       },
       {
