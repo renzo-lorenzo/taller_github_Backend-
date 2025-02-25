@@ -1,10 +1,20 @@
 import express, { Request, Response } from "express"
 const db = require("../DAO/models")
+const { Op } = require("sequelize");
 
 const GastoController = () => {
     const path  = "/gastos"
 
     const router = express.Router()
+
+    router.get("/", async (req: Request, resp: Response) => {
+        const { orden } = req.query;
+        const orderBy = orden === "monto" ? [["monto", "ASC"]] : [["fecha", "ASC"]];
+        const gastos = await db.Gasto.findAll({ order: orderBy });
+        resp.json({ msg: "", gastos });
+    });
+
+
 
     // Operacion para listar gastos
     router.get("/", async (req : Request, resp : Response) => {
@@ -43,37 +53,39 @@ const GastoController = () => {
         resp.json({ msg: "", gasto: gastoCreado });
     });
 
-    /* 
-    Agregado del endpoint para la alerta:
-    Endpoint: GET /gastos/alertas/:usuarioId
-    Este endpoint verifica si los egresos del usuario han superado un umbral.
-    */
-    router.get("/alertas/:usuarioId", async (req: Request, resp: Response): Promise<void> => {
+    router.get("/", async (req: Request, resp: Response) => {
         try {
-            const { usuarioId } = req.params;
-            const limiteGastos = 1000; // Umbral de alerta
+            const { filtro, valor } = req.query;
 
-            // Suponiendo que el modelo Gasto tiene un método "sum" para sumar montos
-            const totalGastos = await db.Gasto.sum("monto", { where: { usuarioId } });
+            console.log("Parámetros recibidos en el backend:", { filtro, valor });
 
-            if (totalGastos > limiteGastos) {
-                resp.json({
-                    alerta: true,
-                    mensaje: "Has superado tu límite de gastos"
-                });
-                return
+            if (!filtro || !valor) {
+                console.log("Falta el filtro o el valor, devolviendo todos los gastos");
+                const gastos = await db.Gasto.findAll();
+                resp.json({ msg: "", gastos });
             }
 
-            resp.json({
-                alerta: false,
-                mensaje: "Tus gastos están dentro del límite"
-            });
+            let whereClause: any = {};
+
+            if (filtro === "categoria") {
+                whereClause.categoriaId = { [Op.eq]: parseInt(valor as string, 10) }; // 🔹 Comparación exacta
+            } else if (filtro === "monto") {
+                whereClause.monto = { [Op.eq]: parseFloat(valor as string) }; // 🔹 Comparación exacta
+            } else if (filtro === "fecha") {
+                whereClause.fecha = { [Op.eq]: new Date(valor as string) }; // 🔹 Conversión a Date
+            }
+
+            console.log("WhereClause construido:", JSON.stringify(whereClause, null, 2));
+
+            const gastos = await db.Gasto.findAll({ where: whereClause });
+
+            console.log("🔍 Gastos filtrados encontrados:", gastos.length);
+
+            resp.json({ msg: "", gastos });
+
         } catch (error) {
-            console.error("Error al verificar alerta:", error);
-            resp.status(500).json({
-                alerta: false,
-                mensaje: "Error al verificar alerta"
-            });
+            console.error("Error al filtrar gastos:", error);
+            resp.status(500).json({ msg: "Error al filtrar gastos" });
         }
     });
 
