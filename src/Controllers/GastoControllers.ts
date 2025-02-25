@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express"
+import express, { Request, Response } from "express"
 const db = require("../DAO/models")
 
 const GastoController = () => {
@@ -17,7 +17,7 @@ const GastoController = () => {
 
     /*
     Endpoint de registro de Proyecto
-    Path : "/gasto"
+    Path : "/gastos"
     Metodo : POST
     Input :
     {
@@ -43,8 +43,40 @@ const GastoController = () => {
         resp.json({ msg: "", gasto: gastoCreado });
     });
 
-    return [path, router]
+    /* 
+    Agregado del endpoint para la alerta:
+    Endpoint: GET /gastos/alertas/:usuarioId
+    Este endpoint verifica si los egresos del usuario han superado un umbral.
+    */
+    router.get("/alertas/:usuarioId", async (req: Request, resp: Response) => {
+        try {
+            const { usuarioId } = req.params;
+            const limiteGastos = 1000; // Umbral de alerta
 
+            // Suponiendo que el modelo Gasto tiene un método "sum" para sumar montos
+            const totalGastos = await db.Gasto.sum("monto", { where: { usuarioId } });
+
+            if (totalGastos > limiteGastos) {
+                return resp.json({
+                    alerta: true,
+                    mensaje: "Has superado tu límite de gastos"
+                });
+            }
+
+            resp.json({
+                alerta: false,
+                mensaje: "Tus gastos están dentro del límite"
+            });
+        } catch (error) {
+            console.error("Error al verificar alerta:", error);
+            resp.status(500).json({
+                alerta: false,
+                mensaje: "Error al verificar alerta"
+            });
+        }
+    });
+
+    return [path, router]
 }
 
 export default GastoController;
