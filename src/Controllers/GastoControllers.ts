@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express"
+import express, { Request, Response } from "express"
 const db = require("../DAO/models")
 const { Op } = require("sequelize");
 
@@ -27,7 +27,7 @@ const GastoController = () => {
 
     /*
     Endpoint de registro de Proyecto
-    Path : "/gasto"
+    Path : "/gastos"
     Metodo : POST
     Input :
     {
@@ -90,9 +90,6 @@ const GastoController = () => {
     });
 
     return [path, router]
-
 }
-
-    
 
 export default GastoController;
