@@ -14,10 +14,16 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "pomodoro_db",
+    "username": "Administrador",
+    "password": "Zhp4ku2sAM3UsWi",
+    "database": "GastosDB",
     "host": "tallergithubbackend.postgres.database.azure.com",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "dialectOptions" : {
+      "ssl" : {
+        "require" : true,
+        "rejectUnauthorized" : false
+      }
+    }
   }
 }

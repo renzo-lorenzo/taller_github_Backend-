@@ -1,10 +1,10 @@
 {
   "name": "2025_0-4.pomodoapp-backend",
   "version": "1.0.0",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node dist/index.js",
+    "build": "",
+    "start": "npm install && node src/index.js",
     "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

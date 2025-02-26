@@ -1,0 +1,44 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const dotenv_1 = __importDefault(require("dotenv"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const cors_1 = __importDefault(require("cors"));
+const GastoControllers_1 = __importDefault(require("./Controllers/GastoControllers"));
+const UsuarioControllers_1 = __importDefault(require("./Controllers/UsuarioControllers"));
+const HistorialControllers_1 = __importDefault(require("./Controllers/HistorialControllers"));
+const CategoriaControllers_1 = __importDefault(require("./Controllers/CategoriaControllers"));
+const PasswordController_1 = __importDefault(require("./Controllers/PasswordController"));
+const AdminController_1 = __importDefault(require("./Controllers/AdminController"));
+const DashboardController_1 = __importDefault(require("./Controllers/DashboardController"));
+const PresupuestoControllers_1 = __importDefault(require("./Controllers/PresupuestoControllers"));
+dotenv_1.default.config();
+const app = (0, express_1.default)();
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+const port = process.env.PORT || 3000;
+// Agregar controladores existentes
+const [gastoPath, gastoRouter] = (0, GastoControllers_1.default)();
+const [usuarioPath, usuarioRouter] = (0, UsuarioControllers_1.default)();
+const [categoriaPath, categoriaRouter] = (0, CategoriaControllers_1.default)();
+const passwordRouter = (0, PasswordController_1.default)();
+const [historialPath, historialRouter] = (0, HistorialControllers_1.default)();
+app.use(historialPath, historialRouter);
+const [presupuestoPath, presupuestoRouter] = (0, PresupuestoControllers_1.default)();
+app.use(presupuestoPath, presupuestoRouter);
+const [adminPath, adminRouter] = (0, AdminController_1.default)();
+const [dashboardPath, dashboardRouter] = (0, DashboardController_1.default)();
+app.use(gastoPath, gastoRouter);
+app.use(usuarioPath, usuarioRouter);
+app.use(categoriaPath, categoriaRouter);
+app.use("/password", passwordRouter);
+app.use(adminPath, adminRouter);
+app.use(dashboardPath, dashboardRouter);
+app.listen(port, () => {
+    console.log(`[Server]: Servidor ejecutándose en puerto ${port}`);
+});
