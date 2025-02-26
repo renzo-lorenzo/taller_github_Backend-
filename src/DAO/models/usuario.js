@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Usuario.hasMany(models.Historial,{
         foreignKey:"usuarioId"
       })
+      Usuario.hasMany(models.Gasto,{
+        foreignKey:"usuarioId"
+      })
     }
   }
   Usuario.init({

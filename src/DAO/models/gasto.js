@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       Gasto.belongsTo(models.Categoria, {
         foreignKey : "categoriaId"
       })
+      Gasto.belongsTo(models.Usuario, {
+        foreignKey : "usuarioId"
+      })
     }
   }
   Gasto.init({
@@ -18,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     categoriaId: DataTypes.INTEGER,
     descripcion: DataTypes.STRING,
     recurrente: DataTypes.STRING,
-    monto: DataTypes.FLOAT
+    monto: DataTypes.FLOAT,
+    usuarioId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Usuario",
+        key: "id"
+      }
+    }
   }, {
     sequelize,
     modelName: 'Gasto',
