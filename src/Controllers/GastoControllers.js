@@ -25,12 +25,25 @@ const GastoController = () => {
         resp.json({ msg: "", gastos });
     }));
     // Operacion para listar gastos
-    router.get("/", (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
-        const gastos = yield db.Gasto.findAll(); //conectamos con la base de datos
-        resp.json({
-            msg: "",
-            gastos: gastos
-        });
+    router.get("/usuario/:id", (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const usuarioId = Number(req.params.id); // Obtiene usuarioId desde la URL
+            if (isNaN(usuarioId)) {
+                resp.status(400).json({ msg: "ID de usuario inválido" });
+                return;
+            }
+            const gastos = yield db.Gasto.findAll({
+                where: { usuarioId }
+            }); //conectamos con la base de datos
+            resp.json({
+                msg: "",
+                gastos: gastos
+            });
+        }
+        catch (error) {
+            console.error("Error al obtener gastos:", error);
+            resp.status(500).json({ msg: "Error interno del servidor" });
+        }
     }));
     /*
     Endpoint de registro de Proyecto
@@ -55,6 +68,7 @@ const GastoController = () => {
             descripcion: nuevoGasto.descripcion,
             recurrente: nuevoGasto.recurrente === "Sí" ? "Sí" : "No",
             monto: nuevoGasto.monto,
+            usuarioId: nuevoGasto.usuarioId
         });
         resp.json({ msg: "", gasto: gastoCreado });
     }));

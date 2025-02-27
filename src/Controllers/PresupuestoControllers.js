@@ -21,26 +21,41 @@ const PresupuestoController = () => {
     Endpoint de listado de presupuestos
     Path : "/presupuesto/"
     Metodo : GET
+    Input :
+    - Params (URL):
+        usuarioId : número (ID del usuario logueado)
     Output:
     {
         msg : "",
         presupuestos : []
     }
     */
-    router.get("/", (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
-        const presupuestos = yield db.Presupuesto.findAll({
-            include: [
-                {
-                    model: db.Categoria,
-                    as: "Categoria",
-                    attributes: ["nombre"]
-                }
-            ]
-        }); //conectamos con la base de datos
-        resp.json({
-            msg: "",
-            presupuestos: presupuestos
-        });
+    router.get("/usuario/:id", (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const usuarioId = Number(req.params.id); // Obtiene usuarioId desde la URL
+            if (isNaN(usuarioId)) {
+                resp.status(400).json({ msg: "ID de usuario inválido" });
+                return;
+            }
+            const presupuestos = yield db.Presupuesto.findAll({
+                where: { usuarioId }, // 🔹 Filtra por usuarioId
+                include: [
+                    {
+                        model: db.Categoria,
+                        as: "Categoria",
+                        attributes: ["nombre"]
+                    }
+                ]
+            });
+            resp.json({
+                msg: "",
+                presupuestos: presupuestos
+            });
+        }
+        catch (error) {
+            console.error("Error al obtener presupuestos:", error);
+            resp.status(500).json({ msg: "Error interno del servidor" });
+        }
     }));
     /*
     Endpoint de registro de presupuesto
@@ -50,7 +65,8 @@ const PresupuestoController = () => {
     - Body (JSON):
     {
         categoriaId : numero,
-        monto : numero
+        monto : numero,
+        usuarioId: numero
     }
     Output:
     {
@@ -59,14 +75,15 @@ const PresupuestoController = () => {
     */
     router.post("/", (req, resp) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(req.body);
-        const { categoriaId, monto } = req.body;
-        if (!categoriaId || !monto) {
+        const { categoriaId, monto, usuarioId } = req.body;
+        if (!categoriaId || !monto || !usuarioId) {
             resp.json({ msg: "Todos los campos son obligatorios" });
             return;
         }
         const pptoCreado = yield db.Presupuesto.create({
             categoriaId,
-            monto
+            monto,
+            usuarioId
         });
         resp.json({ msg: "" });
         return;
