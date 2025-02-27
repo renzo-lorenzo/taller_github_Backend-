@@ -17,7 +17,7 @@ module.exports = {
         descripcion: "Cena en restaurante italiano",
         recurrente: "No", 
         monto: 85.50,
-        usuarioId: 2
+        usuarioId: 4
        },
        {
         fecha: new Date("2024-04-01"),
@@ -49,7 +49,7 @@ module.exports = {
         descripcion: "Compra de ropa en rebajas",
         recurrente: "No", 
         monto: 420.30,
-        usuarioId: 3
+        usuarioId: 4
        },
        {
         fecha: new Date("2024-08-22"),
@@ -57,7 +57,7 @@ module.exports = {
         descripcion: "Pago de internet",
         recurrente: "Sí", 
         monto: 120.00,
-        usuarioId: 3
+        usuarioId: 4
        }
     ], {});
    },

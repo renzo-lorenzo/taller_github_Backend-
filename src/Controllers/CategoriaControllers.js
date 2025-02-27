@@ -33,24 +33,35 @@ const CategoriaController = () => {
         ]
     }
     */
-    router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    router.get("/usuario/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            const usuarioId = Number(req.params.id); // Obtener el ID del usuario de la URL
+            if (isNaN(usuarioId)) {
+                res.status(400).json({ msg: "ID de usuario inválido" });
+                return;
+            }
             const categorias = yield db.Categoria.findAll({
                 include: [
                     {
                         model: db.Presupuesto,
-                        attributes: [] // No traemos los registros individuales, solo sumamos
+                        attributes: [], // No traemos los registros individuales, solo sumamos
                     }
                 ],
                 attributes: [
                     "id",
                     "nombre",
                     [
-                        db.sequelize.literal("(SELECT COALESCE(SUM(monto), 0) FROM \"Presupuesto\" WHERE \"Presupuesto\".\"categoriaId\" = \"Categoria\".\"id\")"),
+                        db.sequelize.literal(`(SELECT COALESCE(SUM(monto), 0) 
+                              FROM "Presupuesto" 
+                              WHERE "Presupuesto"."categoriaId" = "Categoria"."id" 
+                              AND "Presupuesto"."usuarioId" = ${usuarioId})`),
                         "presupuestoTotal"
                     ],
                     [
-                        db.sequelize.literal("(SELECT COALESCE(SUM(monto), 0) FROM \"Gasto\" WHERE \"Gasto\".\"categoriaId\" = \"Categoria\".\"id\")"),
+                        db.sequelize.literal(`(SELECT COALESCE(SUM(monto), 0) 
+                              FROM "Gasto" 
+                              WHERE "Gasto"."categoriaId" = "Categoria"."id" 
+                              AND "Gasto"."usuarioId" = ${usuarioId})`),
                         "gastoTotal"
                     ]
                 ]

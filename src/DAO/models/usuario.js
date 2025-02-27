@@ -13,10 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Usuario.hasMany(models.Historial,{
         foreignKey:"usuarioId"
-      })
+      });
       Usuario.hasMany(models.Gasto,{
         foreignKey:"usuarioId"
-      })
+      });
+      // inicio nuevo codigo
+      Usuario.hasMany(models.Presupuesto, { 
+        foreignKey: "usuarioId"
+      });
+      // fin nuevo codigo
     }
   }
   Usuario.init({
